@@ -1,5 +1,5 @@
 package jim.silverbars
 
-class Order(val price: Money) {
+class Order(val price: Money, val orderType: OrderType) {
 
 }

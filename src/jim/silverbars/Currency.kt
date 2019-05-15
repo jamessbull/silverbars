@@ -1,5 +1,5 @@
 package jim.silverbars
 
-enum class Currency {
-    GBP
+enum class Currency(val display: String) {
+    GBP("£")
 }
