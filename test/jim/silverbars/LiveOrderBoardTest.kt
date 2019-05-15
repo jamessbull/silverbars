@@ -121,26 +121,27 @@ class LiveOrderBoardTest {
 
     @Test
     fun buyOrderSummariesAreOrderedByPriceDescending() {
-        val buyOrder = anOrder("1", "125", BUY)
-        val buyOrder1 = anOrder("2", "125", BUY)
-        val buyOrder2 = anOrder("3", "1", BUY)
-        val buyOrder3 = anOrder("4", "1", BUY)
-        val buyOrder4 = anOrder("5", "200", BUY)
-        val buyOrder5 = anOrder("6", "200", BUY)
 
-        val orderSummary1 = OrderSummary(BUY, Quantity("11"), Money(GBP, "200"))
-        val orderSummary2 = OrderSummary(BUY, Quantity("3"), Money(GBP, "125"))
-        val orderSummary3 = OrderSummary(BUY, Quantity("7"), Money(GBP, "1"))
+        val orders = listOf(
+            anOrder("1", "125", BUY),
+            anOrder("2", "125", BUY),
+            anOrder("3", "1", BUY),
+            anOrder("4", "1", BUY),
+            anOrder("5", "200", BUY),
+            anOrder("6", "200", BUY)
+        )
 
-        val board = LiveOrderBoard()
-            .register(buyOrder)
-            .register(buyOrder1)
-            .register(buyOrder2)
-            .register(buyOrder3)
-            .register(buyOrder4)
-            .register(buyOrder5)
+        val expectedSummaries = listOf(
+            OrderSummary(BUY, Quantity("11"), Money(GBP, "200")),
+            OrderSummary(BUY, Quantity("3"), Money(GBP, "125")),
+            OrderSummary(BUY, Quantity("7"), Money(GBP, "1"))
+        )
 
-        assertThat(board.buyOrderSummaries(), contains(orderSummary1, orderSummary2, orderSummary3))
+        val board = orders.fold(LiveOrderBoard()) { board, order ->
+            board.register(order)
+        }
+
+        assertThat(board.buyOrderSummaries(), equalTo(expectedSummaries))
     }
 
     @Test
@@ -195,7 +196,7 @@ class LiveOrderBoardTest {
         assertThat(board.allSummaries(), equalTo(expectedOrderSummaries))
     }
 
-    fun anOrder(quantity: String, price: String, orderType: OrderType): Order {
+    private fun anOrder(quantity: String, price: String, orderType: OrderType): Order {
         return Order(orderType, Quantity(quantity), Money(GBP, price), "Sue")
     }
 }
