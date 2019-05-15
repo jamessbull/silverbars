@@ -6,7 +6,6 @@ import jim.silverbars.OrderType.SELL
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertThrows
-import org.junit.Ignore
 import org.junit.Test
 
 class LiveOrderBoardTest {
@@ -83,7 +82,6 @@ class LiveOrderBoardTest {
         assertThat(orderSummaries, empty())
     }
 
-    @Ignore
     @Test
     fun twoBuyOrdersWithDifferentPricesIsTwoSummaries() {
         val buyOrder = anOrder("2", "123.23", BUY)
@@ -100,6 +98,24 @@ class LiveOrderBoardTest {
         assertThat(orderSummaries, hasSize(2))
 
         assertThat(orderSummaries, contains(summaryOne, summaryTwo))
+
+    }
+
+    @Test
+    fun twoBuyOrdersWithSamePriceIsOneSummary() {
+        val buyOrder = anOrder("2", "123.23", BUY)
+        val buyOrder2 = anOrder("3", "123.23", BUY)
+
+        val board = LiveOrderBoard()
+            .register(buyOrder)
+            .register(buyOrder2)
+
+        val summaryOne = OrderSummary(BUY, Quantity("5"), Money(GBP, "123.23"))
+
+        val orderSummaries: List<OrderSummary> = board.buyOrders().toOrderSummaries()
+
+        assertThat(orderSummaries, hasSize(1))
+        assertThat(orderSummaries, contains(summaryOne))
 
     }
 
