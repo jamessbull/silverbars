@@ -18,16 +18,16 @@ class LiveOrderBoard(val orders: List<Order> = emptyList()) {
     fun sellOrderSummaries(): List<OrderSummary> =
         sellOrders()
             .groupingBy { it.price }
-            .fold(OrderSummary.empty()) { summary, order ->
-                summary + order
-            }.values.sortedBy { it.price }
+            .fold(OrderSummary.empty()) { summary, order -> summary + order }
+            .values
+            .sortedBy { it.price }
 
     fun buyOrderSummaries(): List<OrderSummary> =
         buyOrders()
             .groupingBy { it.price }
-            .fold(OrderSummary.empty()) { summary, item ->
-                summary + item
-            }.values.sortedByDescending { it.price }
+            .fold(OrderSummary.empty()) { summary, item -> summary + item }
+            .values
+            .sortedByDescending { it.price }
 
     fun allSummaries(): List<OrderSummary> = buyOrderSummaries() + sellOrderSummaries()
 }
