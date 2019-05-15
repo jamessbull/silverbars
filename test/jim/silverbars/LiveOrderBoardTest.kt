@@ -145,26 +145,26 @@ class LiveOrderBoardTest {
 
     @Test
     fun sellOrderSummariesAreOrderedByPriceAscending() {
-        val sellOrder = anOrder("1", "125", SELL)
-        val sellOrder1 = anOrder("2", "125", SELL)
-        val sellOrder2 = anOrder("3", "1", SELL)
-        val sellOrder3 = anOrder("4", "1", SELL)
-        val sellOrder4 = anOrder("5", "200", SELL)
-        val sellOrder5 = anOrder("6", "200", SELL)
+        val orders = listOf(
+            anOrder("1", "125", SELL),
+            anOrder("2", "125", SELL),
+            anOrder("3", "1", SELL),
+            anOrder("4", "1", SELL),
+            anOrder("5", "200", SELL),
+            anOrder("6", "200", SELL)
+        )
 
-        val orderSummary1 = OrderSummary(SELL, Quantity("11"), Money(GBP, "200"))
-        val orderSummary2 = OrderSummary(SELL, Quantity("3"), Money(GBP, "125"))
-        val orderSummary3 = OrderSummary(SELL, Quantity("7"), Money(GBP, "1"))
+        val orderSummaries = listOf(
+            OrderSummary(SELL, Quantity("7"), Money(GBP, "1")),
+            OrderSummary(SELL, Quantity("3"), Money(GBP, "125")),
+            OrderSummary(SELL, Quantity("11"), Money(GBP, "200"))
+        )
 
-        val board = LiveOrderBoard()
-            .register(sellOrder)
-            .register(sellOrder1)
-            .register(sellOrder2)
-            .register(sellOrder3)
-            .register(sellOrder4)
-            .register(sellOrder5)
+        val board = orders.fold(LiveOrderBoard()) { board, order ->
+            board.register(order)
+        }
 
-        assertThat(board.sellOrderSummaries(), contains(orderSummary3, orderSummary2, orderSummary1))
+        assertThat(board.sellOrderSummaries(), equalTo(orderSummaries))
     }
 
     @Test
