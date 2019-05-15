@@ -1,5 +1,7 @@
 package jim.silverbars
 
-class Order(val price: Money, val orderType: OrderType) {
+import java.math.BigDecimal
+
+class Order(val price: Money, val orderType: OrderType, val quantity: BigDecimal) {
 
 }
