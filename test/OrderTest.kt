@@ -13,9 +13,13 @@ class OrderTest {
     fun canCreateOrder() {
         val price = Money(Currency.GBP, BigDecimal("12.21"))
         val quantity = Quantity(BigDecimal("4.0"))
-        val order = Order(orderType = BUY, quantity = quantity, price = price)
+        val userid = "Terry"
+
+        val order = Order(orderType = BUY, quantity = quantity, price = price, userid = userid)
+
         assertThat(order.price, equalTo(price))
         assertThat(order.orderType, equalTo(BUY))
         assertThat(order.quantity, equalTo(Quantity(BigDecimal("4.0"))))
+        assertThat(order.userid, equalTo(userid))
     }
 }
