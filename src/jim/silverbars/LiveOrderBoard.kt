@@ -28,4 +28,6 @@ class LiveOrderBoard(val orders: List<Order> = emptyList()) {
             .fold(OrderSummary.empty()) { summary, item ->
                 summary + item
             }.values.sortedByDescending { it.price }
+
+    fun allSummaries(): List<OrderSummary> = buyOrderSummaries() + sellOrderSummaries()
 }

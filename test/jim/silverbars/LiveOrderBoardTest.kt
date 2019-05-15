@@ -167,6 +167,35 @@ class LiveOrderBoardTest {
         assertThat(board.sellOrderSummaries(), contains(orderSummary3, orderSummary2, orderSummary1))
     }
 
+    @Test
+    fun canGetAllSummariesInTheCorrectOrder() {
+        val sellOrder = anOrder("1", "1", SELL)
+        val sellOrder1 = anOrder("2", "1", SELL)
+        val sellOrder2 = anOrder("3", "2", SELL)
+        val sellOrder3 = anOrder("4", "2", SELL)
+        val buyOrder = anOrder("5", "1", BUY)
+        val buyOrder1 = anOrder("6", "1", BUY)
+        val buyOrder2 = anOrder("7", "2", BUY)
+        val buyOrder3 = anOrder("8", "2", BUY)
+
+        val board = LiveOrderBoard()
+            .register(sellOrder)
+            .register(sellOrder1)
+            .register(sellOrder2)
+            .register(sellOrder3)
+            .register(buyOrder)
+            .register(buyOrder1)
+            .register(buyOrder2)
+            .register(buyOrder3)
+
+        val summary = OrderSummary(SELL, Quantity("3"), Money(GBP, "1"))
+        val summary1 = OrderSummary(SELL, Quantity("7"), Money(GBP, "2"))
+        val summary2 = OrderSummary(BUY, Quantity("11"), Money(GBP, "1"))
+        val summary3 = OrderSummary(BUY, Quantity("15"), Money(GBP, "2"))
+
+        assertThat(board.allSummaries(), contains(summary3, summary2, summary, summary1))
+    }
+
     fun anOrder(quantity: String, price: String, orderType: OrderType): Order {
         return Order(Money(GBP, price), orderType, Quantity(quantity), "Sue")
     }
