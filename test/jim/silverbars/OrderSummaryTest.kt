@@ -16,15 +16,15 @@ class OrderSummaryTest {
     fun canAddOrderToOrderSummary() {
         val price = Money(Currency.GBP, "5")
         val quantity = Quantity("55")
-        val order = Order(price, BUY, quantity, "Mary")
+        val order = Order(BUY, quantity, price, "Mary")
         assertThat(OrderSummary.empty() + order, equalTo(OrderSummary(BUY, quantity, price)))
     }
 
     @Test
     fun canAddManyOrdersToOrderSummary() {
         val price = Money(Currency.GBP, "5")
-        val order = Order(price, BUY, Quantity("55"), "Mary")
-        val order1 = Order(price, BUY, Quantity("45"), "Mary")
+        val order = Order(BUY, Quantity("55"), price, "Mary")
+        val order1 = Order(BUY, Quantity("45"), price, "Mary")
 
         val summary = OrderSummary.empty() + order + order1
         assertThat(summary, equalTo(OrderSummary(BUY, Quantity("100"), price)))

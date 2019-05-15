@@ -196,7 +196,7 @@ class LiveOrderBoardTest {
     }
 
     fun anOrder(quantity: String, price: String, orderType: OrderType): Order {
-        return Order(Money(GBP, price), orderType, Quantity(quantity), "Sue")
+        return Order(orderType, Quantity(quantity), Money(GBP, price), "Sue")
     }
 }
 

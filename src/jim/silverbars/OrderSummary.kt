@@ -13,4 +13,8 @@ data class OrderSummary(val orderType: OrderType?, val quantity: Quantity?, val 
             return OrderSummary(null, null, null)
         }
     }
+
+    override fun toString(): String {
+        return "$orderType $quantity for $price"
+    }
 }

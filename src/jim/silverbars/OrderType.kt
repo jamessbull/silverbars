@@ -3,7 +3,7 @@ package jim.silverbars
 
 enum class OrderType(private val display: String) {
     BUY("Buy"),
-    SELL("sell");
+    SELL("Sell");
 
     override fun toString(): String {
         return display

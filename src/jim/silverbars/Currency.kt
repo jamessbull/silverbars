@@ -1,5 +1,9 @@
 package jim.silverbars
 
-enum class Currency(val display: String) {
-    GBP("£")
+enum class Currency(private val display: String) {
+    GBP("£");
+
+    override fun toString(): String {
+        return display
+    }
 }
