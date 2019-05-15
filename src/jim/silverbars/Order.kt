@@ -1,6 +1,6 @@
 package jim.silverbars
 
-class Order(
+data class Order(
     val price: Money,
     val orderType: OrderType,
     val quantity: Quantity,

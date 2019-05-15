@@ -2,6 +2,6 @@ package jim.silverbars
 
 import java.math.BigDecimal
 
-class Money(currency: Currency, amount: BigDecimal) {
-
+data class Money(val currency: Currency, val amount: BigDecimal) {
+    constructor(currency: Currency, amount: String) : this(currency, BigDecimal(amount))
 }
