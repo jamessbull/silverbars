@@ -15,4 +15,17 @@ class LiveOrderBoard(val orders: List<Order> = emptyList()) {
     fun buyOrders(): List<Order> = orders.filter { it.orderType == BUY }
     fun sellOrders(): List<Order> = orders.filter { it.orderType == SELL }
 
+    fun sellOrderSummaries(): List<OrderSummary> =
+        sellOrders()
+            .groupingBy { it.price }
+            .fold(OrderSummary.empty()) { summary, order ->
+                summary + order
+            }.values.sortedBy { it.price }
+
+    fun buyOrderSummaries(): List<OrderSummary> =
+        buyOrders()
+            .groupingBy { it.price }
+            .fold(OrderSummary.empty()) { summary, item ->
+                summary + item
+            }.values.sortedByDescending { it.price }
 }
