@@ -6,13 +6,8 @@ data class Quantity(val amount: BigDecimal) {
     constructor(amount: String) : this(BigDecimal(amount))
 
     operator fun plus(other: Quantity?): Quantity {
-        other?.let { q ->
-            return Quantity(amount.plus(q.amount))
-        }
-        return this
+        return other?.let { q -> Quantity(amount.plus(q.amount)) } ?: this
     }
 
-    override fun toString(): String {
-        return "${amount}Kg"
-    }
+    override fun toString(): String = "${amount}Kg"
 }
