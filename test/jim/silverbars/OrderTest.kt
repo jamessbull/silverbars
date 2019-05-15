@@ -1,8 +1,7 @@
+package jim.silverbars
+
 import jim.silverbars.Currency.GBP
-import jim.silverbars.Money
-import jim.silverbars.Order
 import jim.silverbars.OrderType.BUY
-import jim.silverbars.Quantity
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
